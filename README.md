@@ -39,7 +39,7 @@ designed to violate.
 ## Pipeline
 
 Each image is split into two complementary chessboard-masked views, augmented
-independently (**random rotation, random cropping, brightness/contrast jittering, and an anistropic augmentation applied to USPS images only. Refer to our paper Section 4 and Appendix B for more detais**), and passed through the **same** network, which outputs a
+independently (**random rotation, random cropping, brightness/contrast jittering, and an anisotropic augmentation applied to USPS images only. Refer to our paper Section 4 and Appendix B for more details**), and passed through the **same** network, which outputs a
 *K*-dimensional logit vector per view. Taking the `argmax` of each vector yields two
 cluster-index sequences; whenever both views of an image land in the same cluster
 (a *view match*), the co-occurrence count of that cluster grows. The surprise score
