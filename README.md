@@ -3,8 +3,7 @@
 Official code for **"Converge to Surprise: Evolutionary Self-supervised Learning on Images"**
 (Canlin Zhang, Xiuwen Liu). Paper: https://arxiv.org/abs/2607.06887
 
-Fully **unsupervised, non-parametric image clustering** (MNIST, FashionMNIST, USPS;
-CIFAR-10 supported) — the strictest deep-clustering setting, where the number of
+Fully **unsupervised, non-parametric image clustering** (MNIST, FashionMNIST, USPS) — the strictest deep-clustering setting, where the number of
 classes *K* is **not** given to the optimizer. A deep network is trained **without
 labels** by maximizing a statistical **Surprise Score** with a **gradient-free
 Evolution Strategy (ES)**, plus periodic **gradient-based fine-tuning on surrogate
@@ -36,8 +35,6 @@ scripts/
   train_and_eval_one_epoch.py        # 3-phase surrogate fine-tuning
   utils.py                           # DeepDPM square-Hungarian cluster_acc helper
 ```
-(`*_v1.py` / `*_v2.py` under `scripts/` are stale snapshots kept for reference and
-are **not** imported.)
 
 ## Setup
 
@@ -45,7 +42,7 @@ are **not** imported.)
 pip install -r requirements.txt
 ```
 Requires Python 3.9+ and a CUDA-capable GPU (training is GPU-only; CPU evaluation
-works with `CUDA_VISIBLE_DEVICES=""`). The MNIST / FashionMNIST / USPS / CIFAR-10
+works with `CUDA_VISIBLE_DEVICES=""`). The MNIST / FashionMNIST / USPS
 datasets are **downloaded automatically** by `torchvision` into `./data/` on first
 run (this folder is git-ignored).
 
