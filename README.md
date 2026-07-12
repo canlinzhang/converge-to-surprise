@@ -22,6 +22,30 @@ clusters, it is non-differentiable and cannot be reduced to a per-step loss; we
 therefore maximize it with an **ES outer loop** (the long-term *explorer*) and a
 periodic **surrogate fine-tuning inner loop** (the short-term *consolidator*).
 
+## Pipeline
+
+Each image is split into two complementary chessboard-masked views, augmented
+independently, and passed through the **same** network, which outputs a
+*K*-dimensional logit vector per view. Taking the `argmax` of each vector yields two
+cluster-index sequences; whenever both views of an image land in the same cluster
+(a *view match*), the co-occurrence count of that cluster grows. The surprise score
+sums, over the over-matching clusters, how strongly these co-occurrences violate the
+i.i.d.-noise null hypothesis `H0`.
+
+![Pipeline](other/2_new.png)
+
+## State-of-the-art results
+
+Our method achieves **state-of-the-art non-parametric clustering** on MNIST,
+Fashion-MNIST, and USPS — leading on MNIST and USPS across all three metrics
+(NMI/ARI/ACC) and obtaining the best ACC and ARI on Fashion-MNIST — **directly from
+raw pixels**, without pretrained features and without being given the number of
+classes. It also recovers a number of active clusters close to the ground truth.
+
+![Main clustering results](other/table_1.png)
+
+![Inferred number of clusters](other/table_2.png)
+
 ## Clustering results
 
 Test-set clusters discovered from raw pixels (no labels, no pretrained features).
