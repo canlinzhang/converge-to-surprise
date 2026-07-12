@@ -1,6 +1,6 @@
 # Converge to Surprise
 
-Official code for **"Converge to Surprise: Evolutionary Self-supervised Learning on Images"**
+Official code for **"Converge to Surprise: Evolutionary Self-supervised Image Clustering"**
 (Canlin Zhang, Xiuwen Liu). Paper: https://arxiv.org/abs/2607.06887
 
 Fully **unsupervised, non-parametric image clustering** (MNIST, FashionMNIST, USPS) — the strictest deep-clustering setting, where the number of
@@ -21,6 +21,28 @@ Score** `S(θ)` measures how strongly the network's two-view argmax assignments
 clusters, it is non-differentiable and cannot be reduced to a per-step loss; we
 therefore maximize it with an **ES outer loop** (the long-term *explorer*) and a
 periodic **surrogate fine-tuning inner loop** (the short-term *consolidator*).
+
+## Clustering results
+
+Test-set clusters discovered from raw pixels (no labels, no pretrained features).
+Each panel is a 3×3 grid of random test images sharing a predicted cluster and a
+ground-truth class (only classes contributing ≥ 50 images to a cluster are shown);
+captions read `Cluster k, <class>`.
+
+**MNIST** — the ten active clusters map one-to-one to the ten digits (97–99.7% purity):
+
+![MNIST clustering](other/MNIST_min50_col10_3_by_3.png)
+
+**USPS** — a run that discovered 11 clusters; clusters 23 and 53 both capture the
+digit 0 (round/plain vs. narrow/tall), the residual over-split of the dominant class:
+
+![USPS clustering](other/USPS_min50_col11_3_by_3.png)
+
+**FashionMNIST** — the hardest case; beyond coarse categories the network separates
+finer attributes, e.g. bags with vs. without a handle, and garments by texture
+(patterned vs. plain) rather than contour:
+
+![FashionMNIST clustering](other/FashionMNIST_min50_col7_3_by_3.png)
 
 ## Repository structure
 
@@ -96,7 +118,7 @@ writes `test_results.txt` into the experiment directory.
 
 ```bibtex
 @article{zhang2026converge,
-  title   = {Converge to Surprise: Evolutionary Self-supervised Learning on Images},
+  title   = {Converge to Surprise: Evolutionary Self-supervised Image Clustering},
   author  = {Zhang, Canlin and Liu, Xiuwen},
   journal = {arXiv preprint arXiv:2607.06887},
   year    = {2026}
