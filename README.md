@@ -22,10 +22,24 @@ clusters, it is non-differentiable and cannot be reduced to a per-step loss; we
 therefore maximize it with an **ES outer loop** (the long-term *explorer*) and a
 periodic **surrogate fine-tuning inner loop** (the short-term *consolidator*).
 
+## Complementary (chessboard) masking
+
+We partition an image's pixel grid with a chessboard pattern into two disjoint sets
+and build two complementary views: the *i*-side keeps only the pixels at the white
+chessboard positions (and zeros out the rest), while the *j*-side keeps only those at
+the black positions. Every pixel appears in exactly one view, so the two views share
+no pixel in common. Under the i.i.d.-noise null hypothesis `H0`, they are therefore
+independent and carry zero mutual information — the property the surprise score is
+designed to violate.
+
+<p align="center">
+  <img src="other/1.png" width="55%" alt="Chessboard masking">
+</p>
+
 ## Pipeline
 
 Each image is split into two complementary chessboard-masked views, augmented
-independently, and passed through the **same** network, which outputs a
+independently (**random rotation, random cropping, brightness/contrast jittering, and an anistropic augmentation applied to USPS images only. Refer to our paper Section 4 and Appendix B for more detais**), and passed through the **same** network, which outputs a
 *K*-dimensional logit vector per view. Taking the `argmax` of each vector yields two
 cluster-index sequences; whenever both views of an image land in the same cluster
 (a *view match*), the co-occurrence count of that cluster grows. The surprise score
@@ -44,7 +58,17 @@ classes. It also recovers a number of active clusters close to the ground truth.
 
 ![Main clustering results](other/table_1.png)
 
-![Inferred number of clusters](other/table_2.png)
+*Main results (%, mean ± std over 5 runs): NMI / ARI / ACC on MNIST, Fashion-MNIST,
+and USPS versus the leading non-parametric methods — DeepDPM, the UNSEEN variants,
+and classical DPM clusterers. Higher is better; best per column in bold. Unlike the
+baselines, our method clusters directly from raw pixels.*
+
+<p align="center">
+  <img src="other/table_2.png" width="50%" alt="Inferred number of clusters">
+</p>
+
+*Inferred number of active clusters (mean ± std); the ground-truth value is 10. Our
+method self-regulates near the true class count without ever being told it.*
 
 ## Clustering results
 
