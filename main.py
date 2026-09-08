@@ -319,7 +319,7 @@ if __name__ == "__main__":
     parser.add_argument("--train_start_epoch_2",  type=int,   default=4000,   help="Epoch to start second supervised fine-tuning")
     parser.add_argument("--in_between_es_epoch_1", type=int, default=500,   help="First interval for ES updates")
     parser.add_argument("--in_between_es_epoch_2", type=int, default=25,    help="Second interval for ES updates")
-    parser.add_argument("--number_of_experiments", type=int,   default=5,     help="Number of experiments to run")
+    parser.add_argument("--number_of_experiments", type=int,   default=10,     help="Number of experiments to run")
     args = parser.parse_args()
 
 
